@@ -1,0 +1,27 @@
+# Ruff configuration for the whole repository.
+target-version = "py310" # keep in sync with requires-python in pyproject.toml
+line-length = 88
+force-exclude = true     # also exclude files that pre-commit passes explicitly
+
+[lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes, such as unused imports and undefined names
+    "I",   # import order, fixed automatically
+    "N",   # naming case (pep8-naming)
+    "D",   # docstrings (pydocstyle), Google convention below
+    "ANN", # type annotations on function signatures
+    "B",   # likely bugs (flake8-bugbear)
+    "UP",  # outdated syntax (pyupgrade)
+]
+ignore = [
+    "D100",   # module docstring
+    "D104",   # package __init__ docstring
+    "D105",   # docstring on magic methods
+    "D107",   # docstring on __init__, the class docstring covers it
+    "ANN401", # typing.Any is sometimes the honest type
+]
+
+[lint.pydocstyle]
+convention = "google"

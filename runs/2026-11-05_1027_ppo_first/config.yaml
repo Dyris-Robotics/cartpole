@@ -1,0 +1,30 @@
+env:
+  control_period: 0.02 # seconds
+  episode_seconds: 10.0
+  reset_noise: 0.1
+
+system:
+#   sensor_noise: {cart_pos: 0.005, pole_angle: 0.01, cart_vel: 0.05, pole_vel: 0.1}
+  # action_delay_steps: 1
+
+observations:
+  cart_pos_max: 1.5
+  cart_vel_max: 10.0
+  pole_vel_max: 30.0
+
+rewards:
+  effort_cost: 0.01
+  action_rate_cost: 0.0
+
+terminations:
+  cart_pos_limit: 1.3
+
+# randomizations:
+#   cart_gear:
+#     gear_min: 13.0
+#     gear_max: 17.0
+
+# disturbances:
+#   pole_kick:
+#     kick_angular_velocity: 3.0
+#     every_seconds: 1.0

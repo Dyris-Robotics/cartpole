@@ -1,0 +1,36 @@
+repos:
+  #--------
+  # General
+  #--------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-toml
+      - id: check-xml
+      - id: check-added-large-files
+        args: [--maxkb=2000] # README images are up to ~1.5 MB
+
+  #-------
+  # Python
+  #-------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+
+  # Pyright runs in the active environment (not an isolated one) so it can
+  # resolve mujoco, gymnasium, stable-baselines3, etc. Activate the project
+  # environment before committing.
+  - repo: local
+    hooks:
+      - id: pyright
+        name: pyright
+        entry: pyright
+        language: system
+        types: [python]
+        pass_filenames: false

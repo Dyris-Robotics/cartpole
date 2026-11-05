@@ -1,0 +1,57 @@
+<mujoco model="boty">
+
+    <compiler angle="degree"/>
+    <option timestep="0.002" gravity="0 0 -9.81" integrator="implicitfast"/>
+
+    <worldbody>
+        <light pos="0 0 3" dir="0 0 -1"/>
+        <geom name="floor_geom" type="plane" size="2 2 0.1" rgba="0.8 0.8 0.8 1"/>
+
+        <body name="slider" pos="0 0 1.2">
+            <geom name="slider_geom" type="cylinder" fromto="0 -1.8 0 0 1.8 0" size="0.04" rgba="0.3 0.3 0.3 1"/>
+
+            <body name="cart" pos="0 0 0.0">
+                <joint name="cart_joint" type="slide" axis="0 1 0" damping="0.5"/>
+                <geom name="cart_geom" type="box" fromto="0 -0.15 0 0 0.15 0" size="0.09" mass="1" rgba="0.2 0.4 0.8 1"/>
+
+                <body name="pole" pos="0.12 0 0.05">
+                    <joint name="pole_joint" type="hinge" axis="1 0 0" damping="0.05"/>
+                    <geom name="pole_geom" type="cylinder" fromto="0 0 0 0 0 -1.0" size="0.03" mass="0.1" rgba="0.2 0.7 0.5 1"/>
+                    <geom name="pole_ball_geom" type="sphere"  pos="0.0 0 -1.0" size="0.05" mass="0.03" rgba="0.9 0.3 0.2 1"/>
+                </body>
+                </body>
+
+            <body name="left_slider_eos" pos="0 -1.65 0.0">
+                <geom name="left_slider_eos_geom" type="box" size="0.06 0.02 0.1" mass="0.01" rgba="1.0 0.0 0.0 1"/>
+                <site name="left_slider_eos_site" pos="0 0 0" size="0.03" rgba="0.9 0.3 0.2 1"/>
+            </body>
+
+            <body name="right_slider_eos" pos="0 1.65 0.0">
+                <geom name="right_slider_eos_geom" type="box" size="0.06 0.02 0.1" mass="0.01" rgba="1.0 0.0 0.0 1"/>
+                <site name="right_slider_eos_site" pos="0 0 0" size="0.03" rgba="0.9 0.3 0.2 1"/>
+            </body>
+
+        </body>
+
+    </worldbody>
+
+    <contact>
+        <exclude body1="slider" body2="cart"/>
+        <exclude body1="cart" body2="pole"/>
+    </contact>
+
+    <actuator>
+        <motor name="cart_motor" joint="cart_joint" gear="15" ctrlrange="-1 1"/> <!--  RL actions are usually -1 to 1-->
+    </actuator>
+
+    <sensor>
+        <jointpos    name="pole_angle_sensor"      joint="pole_joint"/>                 <!-- rad -->
+        <jointvel    name="pole_velocity_sensor"   joint="pole_joint"/>                 <!-- rad/s -->
+        <jointpos    name="cart_pos_sensor"        joint="cart_joint"/>                <!-- m, 0 = middle of the rail -->
+        <jointvel    name="cart_velocity_sensor"   joint="cart_joint"/>                 <!-- m/s -->
+
+        <touch    name="left_slider_eos_sensor"   site="left_slider_eos_site"/>
+        <touch    name="right_slider_eos_sensor"  site="right_slider_eos_site"/>
+    </sensor>
+
+</mujoco>

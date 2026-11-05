@@ -1,0 +1,9 @@
+{
+    "pythonVersion": "3.10",
+    "include": ["cartpole_rl", "scripts"],
+    "exclude": [
+        "**/__pycache__",
+        "**/.*",
+        "runs"
+    ]
+}
